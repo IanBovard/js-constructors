@@ -61,38 +61,7 @@
  * @method  spendMana
  * @method  invoke
  */
-function Spell (name, cost, description){
-  this.name = name;
-  this.cost = cost;
-  this.description = description;
-}
-Spell.prototype.getDetails = function(){
-  let details = "Spell: " + this.name + "\n Cost: " + this.cost + "\n Description: "+ this.description;
-  console.log(details);
-  return details;
-};
-function DamageSpell (name, cost, damage, description){
-  Spell.call(this, name, cost, description);
-  this.damage = damage;
-}
-DamageSpell.prototype = Object.create(Spell.prototype);
 
-function Spellcaster(name, health, mana){
-  this.name = name;
-  this.health = health;
-  this.mana = mana;
-  this.isAlive = true;
-}
-Spellcaster.prototype.inflictDamage = function(damage){
-  if (this.health - damage <= 0){
-    this.health = 0;
-    this.isAlive = false;
-    console.log(this.name,"got it real good!");
-  }else if (this.health - damage > 0){
-    this.health -= damage;
-    console.log(this.name, "took", damage, "points of damage!\n Great work, pal!");
-  }
-};
   /**
    * @method inflictDamage
    *
@@ -140,3 +109,45 @@ Spellcaster.prototype.inflictDamage = function(damage){
    * @param  {Spellcaster} target         The spell target to be inflicted.
    * @return {boolean}                    Whether the spell was successfully cast.
    */
+function Spell (name, cost, description){
+  this.name = name;
+  this.cost = cost;
+  this.description = description;
+}
+Spell.prototype.getDetails = function(){
+  let details = "Spell: " + this.name + "\n Cost: " + this.cost + "\n Description: "+ this.description;
+  console.log(details);
+  return details;
+};
+function DamageSpell (name, cost, damage, description){
+  Spell.call(this, name, cost, description);
+  this.damage = damage;
+}
+DamageSpell.prototype = Object.create(Spell.prototype);
+
+function Spellcaster(name, health, mana){
+  this.name = name;
+  this.health = health;
+  this.mana = mana;
+  this.isAlive = true;
+}
+Spellcaster.prototype.inflictDamage = function(damage){
+  if (this.health - damage <= 0){
+    this.health = 0;
+    this.isAlive = false;
+    console.log(this.name,"got it real good!");
+  }else{
+    this.health -= damage;
+    console.log(this.name, "took", damage, "points of damage!\n Great work, pal!");
+  }
+};
+Spellcaster.prototype.spendMana = function(cost){
+  if (this.mana - cost >= 0){
+    this.mana -= cost;
+    console.log(this.name, "let out some dazzle!");
+    return true;
+  }else{
+    console.log(this.name, "aint got enough juice for that tall glass!");
+    return false;
+  }
+};
