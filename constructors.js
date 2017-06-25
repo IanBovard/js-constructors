@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 /**
  * Creates a generic spell that can be cast.
  *
@@ -43,7 +44,21 @@
  * @property {number} damage
  * @property {string} description
  */
-
+function Spell (name, cost, description){
+  this.name = name;
+  this.cost = cost;
+  this.description = description;
+}
+Spell.prototype.getDetails = function(){
+  let details = "Spell: " + this.name + "\n Cost: " + this.cost + "\n Description: "+ this.description;
+  console.log(details);
+  return details;
+};
+function DamageSpell (name, cost, damage, description){
+  Spell.call(this, name, cost, description);
+  this.damage = damage;
+}
+DamageSpell.prototype = Object.create(Spell.prototype);
 /**
  * Now that you've created some spells, let's create
  * `Spellcaster` objects that can use them!
