@@ -44,21 +44,7 @@
  * @property {number} damage
  * @property {string} description
  */
-function Spell (name, cost, description){
-  this.name = name;
-  this.cost = cost;
-  this.description = description;
-}
-Spell.prototype.getDetails = function(){
-  let details = "Spell: " + this.name + "\n Cost: " + this.cost + "\n Description: "+ this.description;
-  console.log(details);
-  return details;
-};
-function DamageSpell (name, cost, damage, description){
-  Spell.call(this, name, cost, description);
-  this.damage = damage;
-}
-DamageSpell.prototype = Object.create(Spell.prototype);
+
 /**
  * Now that you've created some spells, let's create
  * `Spellcaster` objects that can use them!
@@ -75,7 +61,38 @@ DamageSpell.prototype = Object.create(Spell.prototype);
  * @method  spendMana
  * @method  invoke
  */
+function Spell (name, cost, description){
+  this.name = name;
+  this.cost = cost;
+  this.description = description;
+}
+Spell.prototype.getDetails = function(){
+  let details = "Spell: " + this.name + "\n Cost: " + this.cost + "\n Description: "+ this.description;
+  console.log(details);
+  return details;
+};
+function DamageSpell (name, cost, damage, description){
+  Spell.call(this, name, cost, description);
+  this.damage = damage;
+}
+DamageSpell.prototype = Object.create(Spell.prototype);
 
+function Spellcaster(name, health, mana){
+  this.name = name;
+  this.health = health;
+  this.mana = mana;
+  this.isAlive = true;
+}
+Spellcaster.prototype.inflictDamage = function(damage){
+  if (this.health - damage <= 0){
+    this.health = 0;
+    this.isAlive = false;
+    console.log(this.name,"got it real good!");
+  }else if (this.health - damage > 0){
+    this.health -= damage;
+    console.log(this.name, "took", damage, "points of damage!\n Great work, pal!");
+  }
+};
   /**
    * @method inflictDamage
    *
